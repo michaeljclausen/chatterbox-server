@@ -21,6 +21,7 @@ var defaultCorsHeaders = {
 
 
 var requestHandler = function(request, response, body, result) {
+  
   var responseToGet = function() {
     if (request.url.includes('/classes/messages')) {
       var statusCode = 200;
@@ -39,12 +40,13 @@ var requestHandler = function(request, response, body, result) {
     var statusCode = 201;
     var headers = defaultCorsHeaders;
     headers['Content-Type'] = 'application/json';
-    request.on('data', function(chunk) {
-      var convertedData = chunk;
-      data.data.results.push(JSON.parse(convertedData));
-    });
     response.writeHead(statusCode, headers);
-    response.end('thanks');
+    request.on('data', function(chunk) {
+      var betterData = JSON.parse(chunk);
+      betterData['username'] = decodeURIComponent(betterData['username']);
+      data.data.results.push(betterData);
+    });
+    response.end(JSON.stringify('nice job there buddy boy, Im proud of you, go buy yourself a new hotwheel race car'));
   };  
   
   if (request.method === 'GET') {
