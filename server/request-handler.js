@@ -21,11 +21,8 @@ var defaultCorsHeaders = {
 
 
 var requestHandler = function(request, response, body, result) {
-  
   var responseToGet = function() {
-    var requestBeginning = request.url.split('?');
-    console.log(requestBeginning, 'NICK!!!!!!!!!!!!!!!!');
-    if (requestBeginning[0] === '/classes/messages') {
+    if (request.url.includes('/classes/messages')) {
       var statusCode = 200;
       var headers = defaultCorsHeaders;
       headers['Content-Type'] = 'application/json';
@@ -34,7 +31,7 @@ var requestHandler = function(request, response, body, result) {
     } else {
       statusCode = 404;
       response.writeHead(statusCode, headers);
-      response.end('end');
+      response.end('404 page not found');
     }
   };
   
@@ -44,9 +41,7 @@ var requestHandler = function(request, response, body, result) {
     headers['Content-Type'] = 'application/json';
     request.on('data', function(chunk) {
       var convertedData = chunk;
-      console.log(chunk);
-      //console.log('convertedData ', JSON.parse(convertedData.toString()));
-      //data.data.results.push(JSON.parse(convertedData));
+      data.data.results.push(JSON.parse(convertedData));
     });
     response.writeHead(statusCode, headers);
     response.end('thanks');
@@ -57,6 +52,13 @@ var requestHandler = function(request, response, body, result) {
   }
   if (request.method === 'POST') {
     responseToPost();
+  }
+  if (request.method === 'OPTIONS') {
+    var statusCode = 200;
+    var headers = defaultCorsHeaders;
+    //headers['Content-Type'] = 'text/plain';
+    response.writeHead(statusCode, defaultCorsHeaders);
+    response.end();
   }
   
   

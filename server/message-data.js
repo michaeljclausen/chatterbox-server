@@ -1,6 +1,6 @@
 
 var data = {
-  results: []
+  results: [{username: 'mike', message: 'its pure'}]
 };
 
 module.exports.data = data;
