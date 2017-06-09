@@ -26,7 +26,7 @@ var app = {
     app.$roomSelect.on('change', app.handleRoomChange);
 
     // Fetch previous messages
-    app.startSpinner();
+    //app.startSpinner();
     app.fetch(false);
 
     // Poll for new messages
@@ -36,7 +36,7 @@ var app = {
   },
 
   send: function(message) {
-    app.startSpinner();
+    //app.startSpinner();
 
     // POST the message to the server
     $.ajax({
@@ -73,16 +73,16 @@ var app = {
         var mostRecentMessage = data.results[data.results.length - 1];
 
         // Only bother updating the DOM if we have a new message
-        if (mostRecentMessage.objectId !== app.lastMessageId) {
-          // Update the UI with the fetched rooms
-          app.renderRoomList(data.results);
+        //if (mostRecentMessage.objectId !== app.lastMessageId) {
+        // Update the UI with the fetched rooms
+        app.renderRoomList(data.results);
 
-          // Update the UI with the fetched messages
-          app.renderMessages(data.results, animate);
+        // Update the UI with the fetched messages
+        app.renderMessages(data.results, animate);
 
           // Store the ID of the most recent message
          // app.lastMessageId = mostRecentMessage.objectId;
-        }
+        //}
       },
       error: function(error) {
         console.error('chatterbox: Failed to fetch messages', error);
@@ -203,7 +203,7 @@ var app = {
         app.$roomSelect.val(roomname);
       }
     } else {
-      app.startSpinner();
+      //app.startSpinner();
       // Store as undefined for empty names
       app.roomname = app.$roomSelect.val();
     }
